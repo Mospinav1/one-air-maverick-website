@@ -1,0 +1,20 @@
+# Cloudflare Worker that emails each flight request from the website to your inbox.
+# Replace every REPLACE_ value, then deploy with:  npx wrangler deploy
+name = "oam-flight-requests"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# Sending to your own verified address is free on every Cloudflare plan.
+[[send_email]]
+name = "EMAIL"
+destination_address = "REPLACE_WITH_INBOX@example.com"   # must match TO_EMAIL and be a verified destination address
+
+[vars]
+TO_EMAIL = "REPLACE_WITH_INBOX@example.com"              # where requests arrive
+FROM_EMAIL = "requests@REPLACE_WITH_DOMAIN.com"          # any address on the domain set up in Cloudflare email
+# Websites allowed to send requests (comma-separated, no trailing slashes)
+ALLOWED_ORIGINS = "https://REPLACE_WITH_PROJECT.pages.dev,https://REPLACE_WITH_DOMAIN.com,https://www.REPLACE_WITH_DOMAIN.com"
+
+# Spam protection (optional, recommended): add the Turnstile secret key with
+#   npx wrangler secret put TURNSTILE_SECRET
+# When it is set, every request must include a valid Turnstile token.
