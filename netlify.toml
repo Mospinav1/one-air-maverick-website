@@ -1,0 +1,4 @@
+# Netlify deploy settings: the website lives in OneAirMaverick-site/public.
+[build]
+  publish = "OneAirMaverick-site/public"
+  command = ""
